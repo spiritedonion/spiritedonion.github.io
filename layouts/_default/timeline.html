@@ -1,0 +1,46 @@
+{{ define "main" }}
+  {{ $posts := where site.RegularPages "Section" "posts" }}
+  {{ $posts = $posts.ByDate.Reverse }}
+
+  <div class="timeline-page">
+    <div class="timeline-header">
+      <h1 class="timeline-page-title">Timeline</h1>
+      <p class="timeline-page-sub">{{ len $posts }} posts · newest first</p>
+    </div>
+
+    <div class="timeline-track">
+      {{ $prevYear := 0 }}
+      {{ range $posts }}
+        {{ $year := .Date.Year }}
+
+        {{ if ne $year $prevYear }}
+          {{ $prevYear = $year }}
+          <div class="timeline-year-marker">
+            <span>{{ $year }}</span>
+          </div>
+        {{ end }}
+
+        <div class="timeline-entry">
+          <div class="timeline-dot"></div>
+          <time class="timeline-date" datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Format "Jan 02" }}
+          </time>
+          <div class="timeline-card">
+            <a href="{{ .RelPermalink }}" class="timeline-card-title">{{ .Title }}</a>
+            {{ with .Params.tags }}
+            <div class="timeline-card-tags">
+              {{ range . }}<span class="timeline-card-tag">{{ . }}</span>{{ end }}
+            </div>
+            {{ end }}
+            {{ with .Summary }}
+            <p class="timeline-card-summary">{{ . | plainify | truncate 130 }}</p>
+            {{ end }}
+          </div>
+        </div>
+
+      {{ else }}
+        <p class="timeline-empty">No posts yet.</p>
+      {{ end }}
+    </div>
+  </div>
+{{ end }}
