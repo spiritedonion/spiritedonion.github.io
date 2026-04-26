@@ -1,4 +1,4 @@
 ---
 title: "spiritedonion"
-description: "Offensive security Analyst — web, API, mobile & Active Directory exploitation."
+description: "Offensive security Researcher — web, API, mobile & Active Directory exploitation."
 ---

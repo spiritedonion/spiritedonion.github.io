@@ -25,17 +25,41 @@
           <time class="timeline-date" datetime="{{ .Date.Format "2006-01-02" }}">
             {{ .Date.Format "Jan 02" }}
           </time>
-          <div class="timeline-card">
-            <a href="{{ .RelPermalink }}" class="timeline-card-title">{{ .Title }}</a>
-            {{ with .Params.tags }}
-            <div class="timeline-card-tags">
-              {{ range . }}<span class="timeline-card-tag">{{ . }}</span>{{ end }}
+          {{/* Resolve thumbnail: featureimage URL hotlinked, downloaded, or page resource */}}
+          {{ $thumb := "" }}
+          {{ with .Params.featureimage }}
+            {{ if or (strings.HasPrefix . "http:") (strings.HasPrefix . "https:") }}
+              {{ if site.Params.hotlinkFeatureImage }}
+                {{ $thumb = . }}
+              {{ else }}
+                {{ with resources.GetRemote . }}
+                  {{ $thumb = (.Resize "240x").RelPermalink }}
+                {{ end }}
+              {{ end }}
+            {{ else }}
+              {{ with resources.Get . }}
+                {{ $thumb = (.Resize "240x").RelPermalink }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          <a href="{{ .RelPermalink }}" class="timeline-card">
+            {{ with $thumb }}
+            <div class="timeline-card-thumb">
+              <img src="{{ . }}" alt="" loading="lazy" decoding="async">
             </div>
             {{ end }}
-            {{ with .Summary }}
-            <p class="timeline-card-summary">{{ . | plainify | truncate 130 }}</p>
-            {{ end }}
-          </div>
+            <div class="timeline-card-body">
+              <span class="timeline-card-title">{{ .Title }}</span>
+              {{ with .Params.tags }}
+              <div class="timeline-card-tags">
+                {{ range . }}<span class="timeline-card-tag">{{ . }}</span>{{ end }}
+              </div>
+              {{ end }}
+              {{ with .Summary }}
+              <p class="timeline-card-summary">{{ . | plainify | truncate 130 }}</p>
+              {{ end }}
+            </div>
+          </a>
         </div>
 
       {{ else }}

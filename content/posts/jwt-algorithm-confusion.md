@@ -5,6 +5,7 @@ draft: false
 description: "Exploiting algorithm confusion in JWT implementations to forge tokens and bypass authentication entirely."
 tags: ["web", "jwt", "authentication", "api"]
 series: ["Web Attack Chains"]
+featureimage: "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=1200&q=80"
 showTableOfContents: true
 ---
 

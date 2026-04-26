@@ -10,7 +10,7 @@ showTableOfContents: true
 
 ## Who I Am
 
-I'm an offensive security analyst with a primary focus on **web and mobile API security**, actively expanding into **network exploitation** and **Active Directory attacks**.
+I'm an offensive security researcher with a primary focus on **web and mobile API security**, actively expanding into **network exploitation** and **Active Directory attacks**.
 
 My approach is hands-on and attacker-oriented. I don't stop at vulnerability discovery — I chain findings, follow the access, and push toward full compromise in controlled lab environments.
 

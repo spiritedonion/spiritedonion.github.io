@@ -5,6 +5,7 @@ draft: false
 description: "How a simple IDOR in a user profile endpoint became a full account takeover by chaining it with a password reset flow."
 tags: ["web", "idor", "broken-access-control", "api"]
 series: ["Web Attack Chains"]
+featureimage: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&q=80"
 showTableOfContents: true
 ---
 

@@ -4,6 +4,7 @@ date: 2026-03-17
 draft: false
 description: "A walkthrough of 30 frequent Android security vulnerabilities — how to identify each using static and dynamic analysis, and how to remediate them."
 tags: ["mobile", "android", "web"]
+featureimage: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=1200&q=80"
 showTableOfContents: true
 showReadingTime: true
 ---

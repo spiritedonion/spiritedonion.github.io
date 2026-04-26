@@ -253,10 +253,15 @@ html::after {
    NAVIGATION — always-visible fixed top bar
    ════════════════════════════════════════════════════════════════════ */
 
-/* Spacer pushes content below fixed nav */
+/* Spacer pushes content below fixed nav. Sized per breakpoint so there's
+   no big gap on mobile (where the nav itself is shorter) and no overlap
+   on desktop. */
 .site-nav-spacer {
-  height: 72px;
+  height: 56px;
   flex-shrink: 0;
+}
+@media (min-width: 768px) {
+  .site-nav-spacer { height: 72px; }
 }
 
 /* The fixed bar itself */
@@ -277,15 +282,22 @@ html::after {
 .site-nav-inner {
   max-width: 80rem;
   margin: 0 auto;
-  padding: 0 2.5rem;
+  /* Mobile-first: tight padding so title + buttons fit on a 360px screen */
+  padding: 0 1rem;
 }
 
+@media (min-width: 768px) {
+  .site-nav-inner { padding: 0 1.5rem; }
+}
 @media (min-width: 1024px) {
   .site-nav-inner { padding: 0 2.5rem; }
 }
 @media (min-width: 1280px) {
   .site-nav-inner { padding: 0 4rem; }
 }
+
+/* (Mobile nav rules moved to bottom of file so they win the cascade
+   over the general .site-nav title/icon rules defined below.) */
 
 /* Site title */
 .site-nav .main-menu > a,
@@ -669,6 +681,17 @@ article.flex.flex-col.items-center + section {
   opacity: 0.75;
 }
 
+/* h3 — secondary section anchor (used heavily in checklists) */
+.prose h3 {
+  margin-top: 2rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: var(--text-heading) !important;
+  padding-left: 0.65rem;
+  border-left: 2px solid var(--accent);
+  line-height: 1.45;
+}
+
 /* Links */
 .prose a {
   color: var(--accent) !important;
@@ -748,6 +771,11 @@ article.flex.flex-col.items-center + section {
   border-radius: 10px;
   overflow: hidden;
   position: relative; /* anchor for the absolutely-positioned copy button */
+  /* Margin lives on the wrapper, not the pre, so the wrapper's box matches
+     the visible code box exactly. Otherwise the pre's margin sits inside
+     the wrapper (BFC from overflow:hidden) and the copy button — anchored
+     to the wrapper — lands in the empty margin strip above the box. */
+  margin: 1.5rem 0;
 }
 .highlight {
   border-radius: 10px;
@@ -806,7 +834,7 @@ pre.chroma,
   position: relative;
   overflow: hidden;
   padding: 2.8rem 1.25rem 1.25rem !important;
-  margin: 1.5rem 0;
+  margin: 0 !important;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
   font-size: 0.84rem !important;
   line-height: 1.7 !important;
@@ -1201,16 +1229,52 @@ img { transition: opacity 0.3s ease; }
 /* Post card */
 .timeline-card {
   flex: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 0.9rem;
   padding: 0.85rem 1.1rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 10px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--border) !important;
   transition:
     border-color  0.22s ease,
     box-shadow    0.22s ease,
     transform     0.22s ease;
+}
+
+.timeline-card-thumb {
+  flex: 0 0 84px;
+  align-self: center;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 1.5 / 1;
+  background: var(--accent-dim);
+  border: 1px solid var(--border);
+}
+
+.timeline-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.timeline-entry:hover .timeline-card-thumb img {
+  transform: scale(1.05);
+}
+
+.timeline-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 540px) {
+  .timeline-card-thumb { flex-basis: 64px; }
 }
 
 .timeline-entry:hover .timeline-card {
@@ -1224,8 +1288,6 @@ img { transition: opacity 0.3s ease; }
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--text-heading) !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
   margin-bottom: 0.5rem;
   transition: color 0.18s ease;
   line-height: 1.4;

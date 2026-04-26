@@ -4,6 +4,7 @@ date: 2026-03-22
 draft: false
 description: "Setting up a mobile interception lab, bypassing SSL certificate pinning with Frida, and testing the backend API the app talks to."
 tags: ["mobile", "api", "frida", "web"]
+featureimage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80"
 showTableOfContents: true
 ---
 
